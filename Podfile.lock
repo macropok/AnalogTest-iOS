@@ -1,0 +1,26 @@
+PODS:
+  - ActionSheetPicker-3.0 (2.2.0)
+  - AnalogBridgeController (0.2.0):
+    - ActionSheetPicker-3.0
+    - JGProgressHUD
+    - SDWebImage
+    - Stripe
+  - JGProgressHUD (1.4)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - Stripe (9.2.0)
+
+DEPENDENCIES:
+  - AnalogBridgeController (~> 0.2.0)
+
+SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
+  AnalogBridgeController: 6bbd340e1066c5362a42cb0199fbac05ee867e35
+  JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  Stripe: a47770e82db059d0e7e160f9aabc2997055ee911
+
+PODFILE CHECKSUM: 8886a7ea4e3db98422360b64068e2a0e14fe6167
+
+COCOAPODS: 1.1.1

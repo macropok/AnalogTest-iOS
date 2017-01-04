@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="socicon.ttf">
+            <string>socicon</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="formatCell" id="IHm-hn-Whu" customClass="FormatCell" customModule="AnalogBridge" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IHm-hn-Whu" id="QfU-iQ-otR">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9m-Gl-n4q">
+                        <rect key="frame" x="32" y="15" width="39.5" height="13.5"/>
+                        <fontDescription key="fontDescription" name="socicon" family="socicon" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="J9m-Gl-n4q" firstAttribute="leading" secondItem="QfU-iQ-otR" secondAttribute="leadingMargin" constant="24" id="PxF-c6-Cxs"/>
+                    <constraint firstItem="J9m-Gl-n4q" firstAttribute="centerY" secondItem="QfU-iQ-otR" secondAttribute="centerY" id="cuI-wO-M8p"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="menuName" destination="J9m-Gl-n4q" id="ZV0-Hd-nrE"/>
+            </connections>
+            <point key="canvasLocation" x="-55" y="27"/>
+        </tableViewCell>
+    </objects>
+</document>

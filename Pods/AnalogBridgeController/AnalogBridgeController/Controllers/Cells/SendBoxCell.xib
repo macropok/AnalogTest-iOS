@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="socicon.ttf">
+            <string>socicon</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sendBoxCell" id="Y1g-Lv-L8K" customClass="SendBoxCell" customModule="AnalogBridge" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y1g-Lv-L8K" id="gGL-81-g7f">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view tag="1001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCp-Ln-JKb">
+                        <rect key="frame" x="24" y="6" width="188" height="30"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Box" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EJ-pi-M4k">
+                                <rect key="frame" x="37" y="3" width="82" height="18"/>
+                                <fontDescription key="fontDescription" name="socicon" family="socicon" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flight" translatesAutoresizingMaskIntoConstraints="NO" id="03V-xw-cfB">
+                                <rect key="frame" x="127" y="9" width="12" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="03V-xw-cfB" secondAttribute="height" multiplier="1:1" id="iWZ-oB-bc7"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.44719380140304565" green="0.80429720878601074" blue="0.89485019445419312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4EJ-pi-M4k" firstAttribute="centerY" secondItem="iCp-Ln-JKb" secondAttribute="centerY" constant="-3" id="4ZS-Ei-tXO"/>
+                            <constraint firstItem="4EJ-pi-M4k" firstAttribute="centerX" secondItem="iCp-Ln-JKb" secondAttribute="centerX" constant="-16" id="6e4-CN-QD5"/>
+                            <constraint firstItem="03V-xw-cfB" firstAttribute="leading" secondItem="4EJ-pi-M4k" secondAttribute="trailing" constant="8" id="Jkh-fa-Kak"/>
+                            <constraint firstItem="03V-xw-cfB" firstAttribute="centerY" secondItem="iCp-Ln-JKb" secondAttribute="centerY" id="Rs8-Zy-rjh"/>
+                            <constraint firstItem="03V-xw-cfB" firstAttribute="height" secondItem="iCp-Ln-JKb" secondAttribute="height" multiplier="0.4" id="pJ0-R0-sVN"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iCp-Ln-JKb" firstAttribute="height" secondItem="gGL-81-g7f" secondAttribute="height" multiplier="0.7" id="GjO-dl-KdS"/>
+                    <constraint firstItem="iCp-Ln-JKb" firstAttribute="width" secondItem="gGL-81-g7f" secondAttribute="width" multiplier="0.5" id="HT5-UQ-acE"/>
+                    <constraint firstItem="iCp-Ln-JKb" firstAttribute="centerY" secondItem="gGL-81-g7f" secondAttribute="centerY" id="ZYw-GO-Ufm"/>
+                    <constraint firstItem="iCp-Ln-JKb" firstAttribute="leading" secondItem="gGL-81-g7f" secondAttribute="leadingMargin" constant="16" id="lxx-yU-RXO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="buttonBackgroundView" destination="iCp-Ln-JKb" id="XH5-v4-mnT"/>
+            </connections>
+            <point key="canvasLocation" x="-95.5" y="-143"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="flight" width="144" height="144"/>
+    </resources>
+</document>
