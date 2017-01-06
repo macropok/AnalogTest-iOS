@@ -20,8 +20,16 @@ extension UIViewController {
         self.slideMenuController()?.removeRightGestures()
         self.slideMenuController()?.addLeftGestures()
         
-        
-        let orderHistoryButton:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_person", in: Bundle(url: bundleURL!), compatibleWith: nil)!, style: .plain, target: self, action: #selector(self.toggleOrderHistory))
+        var orderButton:MJBadgeBarButton!
+        let customBtn = UIButton(type: UIButtonType.custom)
+        customBtn.frame = CGRect(x: 0, y: 0, width: 35.0, height: 35.0)
+        customBtn.addTarget(self, action: #selector(self.toggleOrderHistory), for: .touchUpInside)
+        customBtn.setImage(UIImage(named: "ic_person", in: Bundle(url: bundleURL!), compatibleWith: nil)!, for: .normal)
+        orderButton = MJBadgeBarButton()
+        orderButton.setup(customButton: customBtn)
+        orderButton.badgeValue = "0"
+        orderButton.badgeOriginX = 20.0
+        orderButton.badgeOriginY = -4
         
         var shoppingCartButton:MJBadgeBarButton!
         let customButton = UIButton(type: UIButtonType.custom)
@@ -38,7 +46,7 @@ extension UIViewController {
         
         let exitButton:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_exit_to_app", in: Bundle(url: bundleURL!), compatibleWith: nil)!, style: .plain, target: self, action: #selector(self.toggleExitApp))
         
-        self.navigationItem.rightBarButtonItems = [exitButton, shoppingCartButton, orderHistoryButton]
+        self.navigationItem.rightBarButtonItems = [exitButton, shoppingCartButton, orderButton]
         for button in self.navigationItem.rightBarButtonItems! {
             (button).tintColor = UIColor.black
         }
@@ -54,8 +62,15 @@ extension UIViewController {
     }
     
     func setBadge(count:Int) {
-        let badgeButton:MJBadgeBarButton = self.navigationItem.rightBarButtonItems![1] as! MJBadgeBarButton
-        badgeButton.badgeValue = "\(count)"
+        
+        let orderButton:MJBadgeBarButton = self.navigationItem.rightBarButtonItems![2] as! MJBadgeBarButton
+        if APIService.sharedService.customer != nil && APIService.sharedService.customer!["approvals"] != nil {
+            let approvals = APIService.sharedService.customer!["approvals"].intValue
+            orderButton.badgeValue = "\(approvals)"
+        }
+        
+        let cartButton:MJBadgeBarButton = self.navigationItem.rightBarButtonItems![1] as! MJBadgeBarButton
+        cartButton.badgeValue = "\(count)"
     }
     
     func toggleOrderHistory() {
