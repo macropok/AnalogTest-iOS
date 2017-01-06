@@ -246,6 +246,21 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         
         submitOrderButton.layer.cornerRadius = 4
         submitOrderButton.layer.masksToBounds = true
+        
+        getPartialPayment()
+    }
+    
+    func getPartialPayment() {
+        var sum:Double = 0.0
+        if APIService.sharedService.estimateBox != nil {
+            if APIService.sharedService.estimateBox!.qty > 0 {
+                sum = Double(APIService.sharedService.estimateBox!.qty) * APIService.sharedService.estimateBox!.price
+            }
+            else {
+                sum = APIService.sharedService.estimateBox!.price
+            }
+            paymentValue.text = "$\(sum)"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

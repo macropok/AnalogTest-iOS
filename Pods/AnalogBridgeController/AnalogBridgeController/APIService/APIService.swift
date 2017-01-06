@@ -110,7 +110,17 @@ public class APIService: NSObject {
                 return
             }
             
-            completion(true, responseStr)
+            self.getCustomer(completion: {
+                bSuccess in
+                if bSuccess == true {
+                    completion(true, responseStr)
+                }
+                else {
+                    completion(false, "Failed to get Customer Information")
+                }
+            })
+            
+            //completion(true, responseStr)
         })
     }
     

@@ -1,6 +1,6 @@
 PODS:
   - ActionSheetPicker-3.0 (2.2.0)
-  - AnalogBridgeController (0.2.3):
+  - AnalogBridgeController (0.2.5):
     - ActionSheetPicker-3.0
     - JGProgressHUD
     - SDWebImage
@@ -9,18 +9,18 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - Stripe (9.2.0)
+  - Stripe (9.3.0)
 
 DEPENDENCIES:
-  - AnalogBridgeController (~> 0.2.3)
+  - AnalogBridgeController (~> 0.2.5)
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
-  AnalogBridgeController: f0f0009e222fa0cedee789f61f9cc3ab81996489
+  AnalogBridgeController: 3554ab99a9b3bf1113973535ba2911bb7becfe5e
   JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Stripe: a47770e82db059d0e7e160f9aabc2997055ee911
+  Stripe: 0f41a33a6fa3ac76ee668d7df3e2680c28b8ab1a
 
-PODFILE CHECKSUM: e8d9903e1c72d0ceed7e46c71ef845574aa0d086
+PODFILE CHECKSUM: 68f7d018f72efe3de762c90b73c7fa0e6fd5ee78
 
 COCOAPODS: 1.1.1
