@@ -123,6 +123,7 @@
 				TargetAttributes = {
 					80557DD91E1CA30400AAADD1 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = M29Q3CPGBW;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -336,9 +337,10 @@
 			baseConfigurationReference = 7CA4E49734D545418404AFE6 /* Pods-AnalogTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M29Q3CPGBW;
 				INFOPLIST_FILE = AnalogTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marco.AnalogTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pok.MyTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -349,9 +351,10 @@
 			baseConfigurationReference = 7B0DA3A6C9E3AB1B7BCD9C38 /* Pods-AnalogTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M29Q3CPGBW;
 				INFOPLIST_FILE = AnalogTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.marco.AnalogTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pok.MyTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -376,6 +379,7 @@
 				80557DEE1E1CA30400AAADD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

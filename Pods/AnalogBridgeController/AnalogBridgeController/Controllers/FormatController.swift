@@ -16,7 +16,7 @@ enum FORMAT_TYPE {
     case video
 }
 
-class FormatController: UIViewController, UITableViewDataSource {
+class FormatController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var productArray:[Product]? = nil
     var hud:JGProgressHUD!
@@ -142,5 +142,9 @@ class FormatController: UIViewController, UITableViewDataSource {
         
         let indexPath = IndexPath(row: startIndex, section: 0)
         self.productTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 313
     }
 }

@@ -52,7 +52,7 @@ class OrderSuccessController: UIViewController, UITableViewDataSource, UITableVi
          
             cell.orderNumber.text = "\(order!["order_id"].intValue)"
             cell.orderDate.text = order!["order_date"].stringValue
-            cell.orderTotalPaid.text = String(format: "$ %.2f", order!["paymentTotal"].doubleValue)
+            cell.orderTotalPaid.text = APIService.getCurrencyString(fromD: order!["paymentTotal"].doubleValue)
             
             return cell
         }
@@ -64,16 +64,16 @@ class OrderSuccessController: UIViewController, UITableViewDataSource, UITableVi
             cell.orderItem.text = product["description"].stringValue
             cell.orderQuantity.text = "\(product["quantity"].intValue)"
             cell.orderPrice.text = "$" + product["bridge_price"].stringValue + " per " + product["unit_name"].stringValue
-            cell.orderTotal.text = product["total"].stringValue
+            cell.orderTotal.text = APIService.getCurrencyString(fromS: product["total"].stringValue)
             
             return cell
         }
         else if indexPath.row == prodCount + 1 {
             let cell:OrderTotalCell = tableView.dequeueReusableCell(withIdentifier: "orderTotalCell", for: indexPath) as! OrderTotalCell
             
-            cell.orderSubTotal.text = order!["total_no_shipping"].stringValue
-            cell.orderShipping.text = order!["shipping_amount"].stringValue
-            cell.orderTotal.text = order!["total_amount"].stringValue
+            cell.orderSubTotal.text = APIService.getCurrencyString(fromS: order!["total_no_shipping"].stringValue)
+            cell.orderShipping.text = APIService.getCurrencyString(fromS: order!["shipping_amount"].stringValue)
+            cell.orderTotal.text = APIService.getCurrencyString(fromS: order!["total_amount"].stringValue)
             
             return cell
         }
@@ -85,26 +85,46 @@ class OrderSuccessController: UIViewController, UITableViewDataSource, UITableVi
             cell.email.text = ship["ship_email"].stringValue
             cell.telephone.text = ship["ship_phone"].stringValue
             cell.name.text = ship["ship_first_name"].stringValue + " " + ship["ship_last_name"].stringValue
+         
+            var array:[UILabel] = []
+            array.append(cell.company)
+            array.append(cell.address1)
+            array.append(cell.address2)
+            array.append(cell.city)
+            
+            var lastIndex = 0
             
             if ship["ship_company"] == nil || ship["ship_company"].stringValue == "" {
-                cell.company.isHidden = true
+                lastIndex = 0
             }
             else {
-                cell.company.isHidden = false
                 cell.company.text = ship["ship_company"].stringValue
+                lastIndex += 1
             }
             
-            cell.address1.text = ship["ship_address1"].stringValue
+            let address1:UILabel = array[lastIndex]
+            address1.text = ship["ship_address1"].stringValue
+            lastIndex += 1
             
             if ship["ship_address2"] == nil || ship["ship_address2"].stringValue == "" {
-                cell.address2.isHidden = true
+                
             }
             else {
-                cell.address2.isHidden = false
-                cell.address2.text = ship["ship_address2"].stringValue
+                let address2:UILabel = array[lastIndex]
+                address2.text = ship["ship_address2"].stringValue
+                lastIndex += 1
             }
             
-            cell.city.text = ship["ship_city"].stringValue + ", " + ship["ship_state"].stringValue + " " + ship["ship_zip"].stringValue
+            let city:UILabel = array[lastIndex]
+            city.text = ship["ship_city"].stringValue + ", " + ship["ship_state"].stringValue + " " + ship["ship_zip"].stringValue
+            
+            if lastIndex == 1 {
+                cell.address2.isHidden = true
+                cell.city.isHidden = true
+            }
+            else if lastIndex == 2 {
+                cell.city.isHidden = true
+            }
             
             return cell
         }

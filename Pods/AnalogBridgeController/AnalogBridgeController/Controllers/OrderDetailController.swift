@@ -7,18 +7,23 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class OrderDetailController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var orderDetailLabel: UILabel!
     @IBOutlet weak var orderDetailTableView: UITableView!
     var order:JSON!
+    var hud:JGProgressHUD!
+    var index:Int!
+    var approveRejectMessage:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setNavigationBarItem()
         self.navigationItem.title = "Analog Bridge"
+        order = APIService.sharedService.orders[index]
         orderDetailLabel.text = "Order Detail #" + order["order_id"].stringValue
     }
     
@@ -54,7 +59,7 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
             else if indexPath.row == pendingIndex {
                 let cell:OrderDetailEstimateAmountCell = tableView.dequeueReusableCell(withIdentifier: "orderDetailEstimateAmountCell", for: indexPath) as! OrderDetailEstimateAmountCell
                 
-                cell.estimateAmount.text = order["estimate_title"].stringValue
+                cell.estimateAmount.text = APIService.getCurrencyString(fromS: order["total_amount"].stringValue)
                 cell.approveButton.addTarget(self, action: #selector(self.approveOrder(sender:)), for: .touchUpInside)
                 cell.rejectButton.addTarget(self, action: #selector(self.rejectOrder(sender:)), for: .touchUpInside)
                 
@@ -62,15 +67,15 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
             }
             else if indexPath.row == approveIndex {
                 let cell:OrderDetailQuoteAmountCell = tableView.dequeueReusableCell(withIdentifier: "orderDetailQuoteAmountCell", for: indexPath) as! OrderDetailQuoteAmountCell
-                
-                cell.quoteAmount.text = order["total_amount"].stringValue
+                cell.quoteAmount.text = APIService.getCurrencyString(fromS: order["total_amount"].stringValue)
+                cell.approveRejectMessage.text = approveRejectMessage
                 
                 return cell
             }
             else if indexPath.row == lastIndex {
                 let cell:OrderDetailTotalPaidCell = tableView.dequeueReusableCell(withIdentifier: "orderDetailTotalPaidCell", for: indexPath) as! OrderDetailTotalPaidCell
                 
-                cell.totalPaid.text = String(format: "$%.2f", order["paymentTotal"].doubleValue)
+                cell.totalPaid.text = APIService.getCurrencyString(fromD: order["paymentTotal"].doubleValue)
                 
                 return cell
             }
@@ -78,25 +83,46 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
                 let cell:OrderDetailShippingCell = tableView.dequeueReusableCell(withIdentifier: "orderDetailShippingCell", for: indexPath) as! OrderDetailShippingCell
                 
                 cell.name.text = order["ship_first_name"].stringValue + " " + order["ship_last_name"].stringValue
+                
+                var array:[UILabel] = []
+                array.append(cell.company)
+                array.append(cell.address1)
+                array.append(cell.address2)
+                array.append(cell.city)
+                
+                var lastIndex = 0
+                
                 if order["ship_company"] == nil || order["ship_company"].stringValue == "" {
-                    cell.company.isHidden = true
+                    lastIndex = 0
                 }
                 else {
-                    cell.company.isHidden = false
                     cell.company.text = order["ship_company"].stringValue
+                    lastIndex += 1
                 }
                 
-                cell.address1.text = order["ship_address1"].stringValue
+                let address1:UILabel = array[lastIndex]
+                address1.text = order["ship_address1"].stringValue
+                lastIndex += 1
                 
                 if order["ship_address2"] == nil || order["ship_address2"].stringValue == "" {
-                    cell.address2.isHidden = true
+                    
                 }
                 else {
-                    cell.address2.isHidden = false
-                    cell.address2.text = order["ship_address2"].stringValue
+                    let address2:UILabel = array[lastIndex]
+                    address2.text = order["ship_address2"].stringValue
+                    lastIndex += 1
                 }
                 
-                cell.city.text = order["ship_city"].stringValue + " " + order["ship_state"].stringValue + " " + order["ship_zip"].stringValue
+                let city:UILabel = array[lastIndex]
+                city.text = order["ship_city"].stringValue + ", " + order["ship_state"].stringValue + " " + order["ship_zip"].stringValue
+                
+                if lastIndex == 1 {
+                    cell.address2.isHidden = true
+                    cell.city.isHidden = true
+                }
+                else if lastIndex == 2 {
+                    cell.city.isHidden = true
+                }
                 
                 return cell
             }
@@ -111,9 +137,9 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
             else if indexPath.row == count - 3 {
                 let cell:OrderDetailTotalCell = tableView.dequeueReusableCell(withIdentifier: "orderDetailTotalCell", for: indexPath) as! OrderDetailTotalCell
                 
-                cell.subTotal.text = order["total_no_shipping"].stringValue
-                cell.shipping.text = order["shipping_amount"].stringValue
-                cell.total.text = order["total_amount"].stringValue
+                cell.subTotal.text = APIService.getCurrencyString(fromS: order["total_no_shipping"].stringValue)
+                cell.shipping.text = APIService.getCurrencyString(fromS: order["shipping_amount"].stringValue)
+                cell.total.text = APIService.getCurrencyString(fromS: order["total_amount"].stringValue)
                 
                 return cell
             }
@@ -124,7 +150,7 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
                 cell.item.text = product["description"].stringValue
                 cell.quantity.text = "\(product["quantity"].stringValue)"
                 cell.price.text = product["price_per_unit"].stringValue
-                cell.total.text = product["total"].stringValue
+                cell.total.text = APIService.getCurrencyString(fromS: product["total"].stringValue)
                 
                 return cell
             }
@@ -139,17 +165,21 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
         let count = getRowsCount()
         
         if indexPath.row == 0 {
-            return 58
+            return 66
         }
         else {
             if indexPath.row == quoteIndex {
-                return 32
+                return 33
             }
             else if indexPath.row == pendingIndex {
                 return 115
             }
             else if indexPath.row == approveIndex {
-                return 33
+                if approveRejectMessage == "" {
+                    return 33
+                }
+                
+                return 66
             }
             else if indexPath.row == lastIndex {
                 return 33
@@ -179,10 +209,11 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
         if order["pending"].boolValue == true {
             number += 1
         }
-        
+/*
         if order["approved"].boolValue == true || order["rejected"].boolValue == true {
             number += 1
         }
+*/ 
         
         number += getProducts() + 3
         return number
@@ -196,14 +227,16 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
         if order["pending"].boolValue == true {
             count += 1
         }
+/*
         if order["approved"].boolValue == true || order["rejected"].boolValue == true {
             count += 1
         }
+*/
         return count
     }
     
     func getApproveIndex() -> Int {
-        if order["approved"].boolValue != true && order["rejected"].boolValue != true {
+        if order["approved"].boolValue != true || order["rejected"].boolValue != true {
             return 0
         }
         
@@ -250,19 +283,81 @@ class OrderDetailController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func approveOrder(sender:UIButton) {
+        
+        let cell:UITableViewCell? = sender.superview?.superview as? UITableViewCell
+        if cell == nil {
+            return
+        }
+        
+        let indexPath = orderDetailTableView.indexPath(for: cell!)
+        if indexPath == nil {
+            return
+        }
+        
         let orderID:Int = order["order_id"].intValue
+        
+        hud = JGProgressHUD(style: .dark)
+        hud.show(in: self.view)
         APIService.sharedService.approveOrder(orderId: orderID, completion: {
             bSuccess, message in
-            
+            DispatchQueue.main.async {
+                self.hud.dismiss()
+                self.index = APIService.sharedService.getOrderIndex(orderId: orderID)
+                self.order = APIService.sharedService.orders[self.index]
+                self.orderDetailTableView.reloadData()
+                if bSuccess == false {
+                    self.showAlert(message: message)
+                }
+                else {
+                    APIService.sharedService.customer!["approvals"].int = APIService.sharedService.customer!["approvals"].intValue - 1
+                    self.setNavigationBarItem()
+                }
+            }
         })
     }
     
     func rejectOrder(sender:UIButton) {
+        let cell:UITableViewCell? = sender.superview?.superview as? UITableViewCell
+        if cell == nil {
+            return
+        }
+        
+        let indexPath = orderDetailTableView.indexPath(for: cell!)
+        if indexPath == nil {
+            return
+        }
+        
         let orderID:Int = order["order_id"].intValue
+        
+        hud = JGProgressHUD(style: .dark)
+        hud.show(in: self.view)
         APIService.sharedService.rejectOrder(orderId: orderID, completion: {
             bSuccess, message in
-            
+            DispatchQueue.main.async {
+                self.hud.dismiss()
+                self.index = APIService.sharedService.getOrderIndex(orderId: orderID)
+                self.order = APIService.sharedService.orders[self.index]
+                self.orderDetailTableView.reloadData()
+                if bSuccess == false {
+                    self.showAlert(message: message)
+                }
+                else {
+                    APIService.sharedService.customer!["approvals"].int = APIService.sharedService.customer!["approvals"].intValue - 1
+                    self.setNavigationBarItem()
+                }
+            }
         })
+    }
+    
+    func showAlert(message:String) {
+        DispatchQueue.main.async {
+            self.hud.dismiss()
+            
+            let alertController:UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let okAction:UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

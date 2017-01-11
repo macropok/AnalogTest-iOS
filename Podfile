@@ -7,6 +7,6 @@ target 'AnalogTest' do
 
   # Pods for AnalogTest
 
-  pod 'AnalogBridgeController', '~>0.2.5'
+  pod 'AnalogBridgeController', '~>0.3.2'
 
 end

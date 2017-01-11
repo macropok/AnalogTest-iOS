@@ -25,13 +25,11 @@ class HowItWorksController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let screenWidth = UIScreen.main.bounds.size.width
-        
         for i in 0..<6 {
             let tag = 5000 + i
             let view:UIView? = self.view.viewWithTag(tag)
             if view != nil {
-                view!.layer.cornerRadius = screenWidth / 8
+                view!.layer.cornerRadius = view!.frame.size.width / 2
                 view!.layer.masksToBounds = true
             }
         }
@@ -41,5 +39,7 @@ class HowItWorksController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
 }

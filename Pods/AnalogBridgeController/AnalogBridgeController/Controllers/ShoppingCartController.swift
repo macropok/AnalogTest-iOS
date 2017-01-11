@@ -77,7 +77,7 @@ class ShoppingCartController: UIViewController, UITableViewDelegate, UITableView
             let cell:CheckOutCell = tableView.dequeueReusableCell(withIdentifier: "checkOutCell", for: indexPath) as! CheckOutCell
             checkOutCell = cell
             
-            cell.sumLabel.text = "$ " + String(format: "%.2f", getEstimateSum())
+            cell.sumLabel.text = APIService.getCurrencyString(fromD: getEstimateSum())
             cell.checkOutButton.addTarget(self, action: #selector(self.checkOut(sender:)), for: .touchUpInside)
             
             return cell
@@ -90,7 +90,7 @@ class ShoppingCartController: UIViewController, UITableViewDelegate, UITableView
             
             cell.productImageView.sd_setImage(with: URL(string: cell.product.imageURL))
             cell.productName.text = cell.product.name
-            cell.priceName.text = "$ " + String(format: "%.2f", cell.product.price) + " per " + cell.product.unitName
+            cell.priceName.text = "$" + String(format: "%.2f", cell.product.price) + " per " + cell.product.unitName
             cell.estValueField.text = String(cell.product.qty)
             
             cell.removeCartButton.addTarget(self, action: #selector(self.removeCart(sender:)), for: .touchUpInside)
@@ -105,7 +105,7 @@ class ShoppingCartController: UIViewController, UITableViewDelegate, UITableView
             
             cell.productImageView.sd_setImage(with: URL(string: cell.product.imageURL))
             cell.productName.text = cell.product.name
-            cell.priceName.text = "$ " + String(format: "%.2f", cell.product.price) + " per " + cell.product.unitName
+            cell.priceName.text = "$" + String(format: "%.2f", cell.product.price) + " per " + cell.product.unitName
             cell.estValueField.text = String(cell.product.qty)
             
             cell.removeCartButton.addTarget(self, action: #selector(self.removeCart(sender:)), for: .touchUpInside)
@@ -215,7 +215,10 @@ class ShoppingCartController: UIViewController, UITableViewDelegate, UITableView
             self.setBadge(count: APIService.sharedService.cartCount)
         }
         
-        checkOutCell?.sumLabel.text = "$ " + String(format: "%.2f", getEstimateSum())
+        checkOutCell?.sumLabel.text = APIService.getCurrencyString(fromD: getEstimateSum())
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 292
+    }
 }

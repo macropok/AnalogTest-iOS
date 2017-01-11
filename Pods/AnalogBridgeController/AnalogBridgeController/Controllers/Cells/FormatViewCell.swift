@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class FormatViewCell: UITableViewCell, UITextFieldDelegate {
 
@@ -27,6 +28,17 @@ class FormatViewCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        estValueField.attributedPlaceholder = NSAttributedString(string: "# Qty",
+                                                               attributes: [NSForegroundColorAttributeName: UIColor.black])
+        
+        estValueField.layer.borderColor = UIColor.darkGray.cgColor
+        estValueField.layer.borderWidth = 1.0
+        estValueField.layer.cornerRadius = 5
     }
 
     @IBAction func onAddEstimate(_ sender: Any) {

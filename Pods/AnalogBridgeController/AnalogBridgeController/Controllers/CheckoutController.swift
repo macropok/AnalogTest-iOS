@@ -247,7 +247,38 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         submitOrderButton.layer.cornerRadius = 4
         submitOrderButton.layer.masksToBounds = true
         
+        expirationDate.addTarget(self, action: #selector(textFieldChanged(textField:)), for: .editingChanged)
+        cvc.addTarget(self, action: #selector(textFieldChanged(textField:)), for: .editingChanged)
+        cardNumber.addTarget(self, action: #selector(textFieldChanged(textField:)), for: .editingChanged)
+        
+        
         getPartialPayment()
+    }
+    
+    func textFieldChanged(textField: UITextField) {
+        let str:String = textField.text!
+        if textField == expirationDate {
+            if str.length == 2 {
+                textField.text = str.appending("/")
+            }
+            else if str.length > 5 {
+                let index = str.index(str.startIndex, offsetBy: 5)
+                textField.text = str.substring(to: index)
+            }
+        }
+        else if textField == cvc {
+            if str.length > 3 {
+                let index = str.index(str.startIndex, offsetBy: 3)
+                textField.text = str.substring(to: index)
+            }
+        }
+        else if textField == cardNumber {
+            if str.length > 16 {
+                let index = str.index(str.startIndex, offsetBy: 16)
+                textField.text = str.substring(to: index)
+            }
+        }
+        
     }
     
     func getPartialPayment() {
@@ -259,7 +290,7 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             else {
                 sum = APIService.sharedService.estimateBox!.price
             }
-            paymentValue.text = "$\(sum)"
+            paymentValue.text = APIService.getCurrencyString(fromD: sum)
         }
     }
     
@@ -433,13 +464,13 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             (APIService.sharedService.customer!["ship"])["company"].string = company.text!
         }
         if address1.text != nil {
-            (APIService.sharedService.customer!["ship"])["address1"].string = company.text!
+            (APIService.sharedService.customer!["ship"])["address1"].string = address1.text!
         }
         if address2.text != nil {
-            (APIService.sharedService.customer!["ship"])["address1"].string = company.text!
+            (APIService.sharedService.customer!["ship"])["address2"].string = company.text!
         }
         if city.text != nil {
-            (APIService.sharedService.customer!["ship"])["city"].string = company.text!
+            (APIService.sharedService.customer!["ship"])["city"].string = city.text!
         }
         (APIService.sharedService.customer!["ship"])["state"].string = getShortStateName(stateName: self.state.text!)
         if zipCode.text != nil {
@@ -450,6 +481,10 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         }
         if emailAddress.text != nil {
             (APIService.sharedService.customer!["ship"])["email"].string = emailAddress.text!
+        }
+        
+        if customInstruction.text != nil {
+            APIService.sharedService.customer!["instructions"].string = customInstruction.text!
         }
         
         print(APIService.sharedService.customer!.rawString()!)
@@ -481,7 +516,16 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         APIService.sharedService.submitOrder(card: cardParam, completion: {
             bSuccess, message in
             if bSuccess == true {
-                self.showSuccessController()
+                
+                APIService.sharedService.getCustomer(completion: {
+                    bSuccess in
+                    if bSuccess == true {
+                        self.showSuccessController()
+                    }
+                    else {
+                        self.showAlert(message: "Get Customer Information Failed.")
+                    }
+                })
             }
             else {
                 self.showAlert(message: message!)
@@ -602,6 +646,17 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         if textView.text == "" {
             textView.text = "Custom Instruction"
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == expirationDate {
+            if string == "" && textField.text?.length == 3 {
+                let dateString = textField.text
+                textField.text = dateString?.replacingOccurrences(of: "/", with: "")
+            }
+        }
+        
+        return true
     }
     
     override func didReceiveMemoryWarning() {

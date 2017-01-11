@@ -11,6 +11,7 @@ import UIKit
 class OrderDetailQuoteAmountCell: UITableViewCell {
 
     @IBOutlet weak var quoteAmount: UILabel!
+    @IBOutlet weak var approveRejectMessage: UILabel!
     
     
     override func awakeFromNib() {
