@@ -26,6 +26,8 @@ class OrderHistoryController: UIViewController, UITableViewDelegate, UITableView
         hud = JGProgressHUD(style: .dark)
         hud.show(in: self.view)
         
+        historyTableView.delaysContentTouches = false
+        
         APIService.sharedService.getCustomer(completion: {
             bSuccess in
             
@@ -72,22 +74,35 @@ class OrderHistoryController: UIViewController, UITableViewDelegate, UITableView
         cell.orderTotal.text = APIService.getCurrencyString(fromS: order["total_amount"].stringValue)
         cell.orderStatus.text = order["status_name"].stringValue
         
+        if order["pending"].intValue != 0 {
+            cell.viewButton.backgroundColor = UIColor(hex: "FFCF05")
+        }
+        else {
+            cell.viewButton.backgroundColor = UIColor(hex: "90C4F0")
+        }
+        
+        cell.viewButton.addTarget(self, action: #selector(self.viewOrderDetail(sender:)), for: .touchUpInside)
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 113
+    func viewOrderDetail(sender:UIButton) {
+        let cell:UITableViewCell = (sender.superview)?.superview as! UITableViewCell
+        let indexPath = historyTableView.indexPath(for: cell)
+        if indexPath != nil {
+            let podBundle = Bundle(for: self.classForCoder)
+            let bundleURL = podBundle.url(forResource: "AnalogBridgeController", withExtension: "bundle", subdirectory: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle(url:bundleURL!))
+            
+            let detailController:OrderDetailController = storyboard.instantiateViewController(withIdentifier: "orderDetailController") as! OrderDetailController
+            detailController.order = APIService.sharedService.orders[indexPath!.row]
+            detailController.index = indexPath!.row
+            let navController:UINavigationController = UINavigationController(rootViewController: detailController)
+            self.slideMenuController()?.changeMainViewController(navController, close: true)
+        }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let podBundle = Bundle(for: self.classForCoder)
-        let bundleURL = podBundle.url(forResource: "AnalogBridgeController", withExtension: "bundle", subdirectory: nil)
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(url:bundleURL!))
-        
-        let detailController:OrderDetailController = storyboard.instantiateViewController(withIdentifier: "orderDetailController") as! OrderDetailController
-        detailController.order = APIService.sharedService.orders[indexPath.row]
-        detailController.index = indexPath.row
-        let navController:UINavigationController = UINavigationController(rootViewController: detailController)
-        self.slideMenuController()?.changeMainViewController(navController, close: true)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 151
     }
 }

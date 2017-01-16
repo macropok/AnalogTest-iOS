@@ -39,7 +39,8 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
         let format = storyboard.instantiateViewController(withIdentifier: "formatController")
         formatController = UINavigationController(rootViewController: format)
         
-        let faq = storyboard.instantiateViewController(withIdentifier: "faqViewController")
+        //let faq = storyboard.instantiateViewController(withIdentifier: "faqViewController")
+        let faq = ExpandableTableViewController()
         faqViewController = UINavigationController(rootViewController: faq)
         
         let features = storyboard.instantiateViewController(withIdentifier: "featuresController")

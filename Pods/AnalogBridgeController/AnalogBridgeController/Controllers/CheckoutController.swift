@@ -573,8 +573,8 @@ class CheckoutController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             
             if prevTextField != nil {
                 prevTextField?.resignFirstResponder()
-                customInstruction.resignFirstResponder()
             }
+            customInstruction.resignFirstResponder()
             
             var stateNameArray:[String] = []
             for st in states {

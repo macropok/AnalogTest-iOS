@@ -15,6 +15,7 @@ class OrderHistoryCell: UITableViewCell {
     @IBOutlet weak var orderStatus: UILabel!
     @IBOutlet weak var orderTotal: UILabel!
     
+    @IBOutlet weak var viewButton: UIButton!
     
     
     override func awakeFromNib() {

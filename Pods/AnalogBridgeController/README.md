@@ -3,7 +3,7 @@
 AnalogBridgeController is a component which contains iOS project for demo. (https://analogbridge.io/demo)
 
 ```
-pod 'AnalogBridgeController', '~> 0.2.5'
+pod 'AnalogBridgeController', '~> 0.3.2'
 ```
 
 AnalogBridgeRunner provides sigleton instance.

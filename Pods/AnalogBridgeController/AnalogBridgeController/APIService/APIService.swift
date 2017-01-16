@@ -123,8 +123,6 @@ public class APIService: NSObject {
                     completion(false, "Failed to get Customer Information")
                 }
             })
-            
-            //completion(true, responseStr)
         })
     }
     
