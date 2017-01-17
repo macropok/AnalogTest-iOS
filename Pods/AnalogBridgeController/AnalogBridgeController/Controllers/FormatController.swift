@@ -21,6 +21,7 @@ class FormatController: UIViewController, UITableViewDataSource, UITableViewDele
     var productArray:[Product]? = nil
     var hud:JGProgressHUD!
     var formatType:FORMAT_TYPE = FORMAT_TYPE.image
+    var bShowToast:Bool = false
     
     @IBOutlet weak var productTableView: UITableView!
     
@@ -147,4 +148,22 @@ class FormatController: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 313
     }
+    
+    func showToast(message:String) {
+        bShowToast = true
+        dismissProgressView()
+        hud = JGProgressHUD(style: .dark)
+        hud?.indicatorView = nil
+        hud?.textLabel.text = message
+        hud?.show(in: view)
+        hud?.dismiss(afterDelay: 1.0)
+    }
+    
+    @objc func dismissProgressView() {
+        if hud != nil {
+            hud?.dismiss()
+            bShowToast = false
+        }
+    }
+
 }

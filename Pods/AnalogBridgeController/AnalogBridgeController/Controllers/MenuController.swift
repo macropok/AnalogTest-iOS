@@ -46,7 +46,8 @@ class MenuController: UIViewController, UITableViewDataSource, UITableViewDelega
         let features = storyboard.instantiateViewController(withIdentifier: "featuresController")
         featuresController = UINavigationController(rootViewController: features)
         
-        let how = storyboard.instantiateViewController(withIdentifier: "howItWorksController")
+        //let how = storyboard.instantiateViewController(withIdentifier: "howItWorksController")
+        let how = storyboard.instantiateViewController(withIdentifier: "howPageController")
         howItWorksController = UINavigationController(rootViewController: how)
     }
     

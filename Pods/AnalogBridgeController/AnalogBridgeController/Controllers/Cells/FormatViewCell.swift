@@ -73,6 +73,7 @@ class FormatViewCell: UITableViewCell, UITextFieldDelegate {
                     self.parentController.setBadge(count: APIService.sharedService.cartCount)
                 }
                 self.estValueField.isEnabled = true
+                self.parentController.showToast(message: "Items added successfully.")
             }
         })
         
@@ -80,6 +81,7 @@ class FormatViewCell: UITableViewCell, UITextFieldDelegate {
             action in
             DispatchQueue.main.async {
                 self.estValueField.isEnabled = true
+                self.parentController.showToast(message: "Adding items failed.")
             }
         })
         

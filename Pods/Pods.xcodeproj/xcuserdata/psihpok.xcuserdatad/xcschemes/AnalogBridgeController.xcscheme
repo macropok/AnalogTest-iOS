@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F368A5DC7BEF2BD1B7637D387B3C5E93'
+               BlueprintIdentifier = 'B26965134F665880D66513F0CFCBAD78'
                BlueprintName = 'AnalogBridgeController'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'AnalogBridgeController.framework'>

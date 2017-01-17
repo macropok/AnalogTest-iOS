@@ -111,7 +111,7 @@ open class ExpandableTableViewController: UIViewController, UITableViewDataSourc
             return self.dynamicCellHeight(indexPath)
         }
     }
-
+    
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.dynamicCellHeight(indexPath)
     }
@@ -122,7 +122,7 @@ open class ExpandableTableViewController: UIViewController, UITableViewDataSourc
         cell.layoutMargins = UIEdgeInsets.zero
        
     }
-*/
+*/    
     //MARK: table view delegate
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -132,7 +132,7 @@ open class ExpandableTableViewController: UIViewController, UITableViewDataSourc
         } else {
             self.expandedIndexPaths.append(indexPath)
         }
-        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         self.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
     }
     
