@@ -34,16 +34,18 @@ class ViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: request, completionHandler: {
             data, response, error in
             
-            DispatchQueue.main.async {
-                hud?.dismiss()
-            }
-            
             guard let _ = data, error == nil else {
+                DispatchQueue.main.async {
+                    hud?.dismiss()
+                }
                 self.showAlert(message: "Unable to get Token")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                DispatchQueue.main.async {
+                    hud?.dismiss()
+                }
                 self.showAlert(message: "Unable to get Token")
                 return
             }
@@ -54,6 +56,7 @@ class ViewController: UIViewController {
                 bSuccess, message in
                 if bSuccess == true {
                     DispatchQueue.main.async {
+                        hud?.dismiss()
                         AnalogBridgeRunner.sharedRunner.runFrom(controller: self)
                     }
                 }

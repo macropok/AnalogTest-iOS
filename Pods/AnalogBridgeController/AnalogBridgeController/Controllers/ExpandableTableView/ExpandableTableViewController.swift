@@ -53,6 +53,7 @@ open class ExpandableTableViewController: UIViewController, UITableViewDataSourc
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.title = "FAQ"
+        self.setNavigationBarItem()
         self.addSubviews()
     }
     

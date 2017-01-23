@@ -34,23 +34,23 @@ class DisclosureIndicator: UIView {
     
     override func draw(_ rect: CGRect) {
         let width = rect.size.width
-        let padding : CGFloat = 15
+        let padding : CGFloat = width/2
         let path = UIBezierPath()
         path.lineJoinStyle = CGLineJoin.round
         path.lineWidth = 2.0
         
         if(self.direction == ArrowDirection.bottom) {
-            let origin = CGPoint(x: padding/2, y: padding/2)
+            let origin = CGPoint(x: width / 4, y: 3 * width / 8)
             path.move(to: origin)
-            path.addLine(to: CGPoint(x: width/2, y: width-padding))
-            path.addLine(to: CGPoint(x: width-(padding/2), y: padding/2))
+            path.addLine(to: CGPoint(x: width/2, y: 5 * width / 8))
+            path.addLine(to: CGPoint(x: 3 * width / 4, y: 3 * width / 8))
             UIColor.darkGray.setStroke()
             path.stroke()
         }   else {
-            let origin = CGPoint(x: padding/2, y: width - padding)
+            let origin = CGPoint(x: width/4, y: 5*width/8)
             path.move(to: origin)
-            path.addLine(to: CGPoint(x: width/2, y: padding/2))
-            path.addLine(to: CGPoint(x: width-(padding/2),y: width - padding))
+            path.addLine(to: CGPoint(x: width/2, y: 3*width/8))
+            path.addLine(to: CGPoint(x: 3*width/4,y: 5*width/8))
             UIColor.darkGray.setStroke()
             path.stroke()
         }

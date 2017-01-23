@@ -25,7 +25,7 @@ class ExpandableTableViewCell: UITableViewCell {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.numberOfLines = 3
         lbl.textColor = UIColor.black
-        lbl.font = UIFont.systemFont(ofSize: 15.0)
+        lbl.font = UIFont.systemFont(ofSize: 17.0)
         return lbl
     } ()
     
@@ -34,7 +34,7 @@ class ExpandableTableViewCell: UITableViewCell {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.darkGray
-        lbl.font = UIFont.systemFont(ofSize: 13.0)
+        lbl.font = UIFont.systemFont(ofSize: 15.0)
         return lbl
     } ()
     
@@ -78,7 +78,6 @@ class ExpandableTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.spacerView)
         self.contentView.addSubview(self.answerLabel)
         self.contentView.addSubview(self.bottomSpacerView)
-        self.disclosureView.isHidden = true
         self.setLayoutConstraints()
     }
     
